@@ -1,7 +1,7 @@
 /* Config OAuth2 Setting */
-var INFOSCOOP_HOST='54.248.249.15';
-var CLIENT_ID='2fe45841145fd9383bb807b374302d643ecd50ba165cbe08a75';
-var CLIENT_SECRET='2fe45841145fd9383c5807b374302d643ecd50ba165cbe08a75';
+var INFOSCOOP_HOST='<Host>';
+var CLIENT_ID='<ClientID>';
+var CLIENT_SECRET='<ClientSecret>';
 var FLG=false;
 
 var express = require('express');
