@@ -27,6 +27,10 @@ redis.on('ready', function(err){
         console.log('init redis.')
         redis.flushdb();
 
+        // redis.hset('hoge','userId','hoge');
+        // redis.hset('hoge','videoBrokerId','1');
+        // redis.hset('hoge','documentBrokerId','2');
+        // redis.hset('hoge','presentationBrokerId','3');
         OAuth2.Client.getToken({},function(err, result){
             if (err) console.log('Access Token Error', err.message);
 
@@ -42,8 +46,9 @@ redis.on('ready', function(err){
                             for(var i in json.userProfiles) {
                                 var userId = json.userProfiles[i].uid;
                                 redis.hset(userId,'userId',userId);
-                                redis.hset(userId,'brokerId','');
-
+                                redis.hset(userId,'videoBrokerId','');
+                                redis.hset(userId,'documentBrokerId','');
+                                redis.hset(userId,'presentationBrokerId','');
                                 console.log('Regist user : '+userId);
                             }
                             FLG=true;
