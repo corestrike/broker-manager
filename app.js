@@ -80,7 +80,7 @@ app.use(function(req, res, next) {
 }).options('*', function(req, res, next){
     res.end();
 });
-app.use('/users', users);
+app.use('/broker-manager/users', users);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

@@ -42,8 +42,12 @@ router.put('/:id', function(req,res){
 	var videoBrokerId = req.param('videoBrokerId');
 	var documentBrokerId = req.param('documentBrokerId');
 	var presentationBrokerId = req.param('presentationBrokerId');
-
-	if(!videoBrokerId && !documentBrokerId && !presentationBrokerId) res.send(400);
+	var userName = req.param('userName');
+	console.log("videoBrokerId " + videoBrokerId);
+	console.log("documentBrokerId " + documentBrokerId);
+	console.log("presentationBrokerId " + presentationBrokerId);
+	console.log("userName " + userName);
+	if(!videoBrokerId && !documentBrokerId && !presentationBrokerId && !userName) res.send(400);
 
 	client.exists(userId, function(err, bool){
 		if(err) res.send(500);
@@ -64,6 +68,11 @@ router.put('/:id', function(req,res){
 		}else if(presentationBrokerId){
 			console.log("update presentationBrokerId");
 			client.hset(userId,'presentationBrokerId',presentationBrokerId,function(err, val){
+				if(err) res.send(500);
+				res.send(200);
+			});
+		}else if(userName){
+			client.hset(userId,'userName',userName,function(err, val){
 				if(err) res.send(500);
 				res.send(200);
 			});
@@ -132,6 +141,57 @@ router.delete('/:id', function(req,res){
 
 		client.hset(userId,'userId',userId);
 		res.send(200);
+	});
+});
+
+/* DELETE video brokerId */
+router.delete('/:id/videoBrokerId', function(req,res){
+	var client = module.parent.exports.set('redis');
+
+	var userId = req.param('id');
+
+	client.exists(userId, function(err, bool){
+		if(err) res.send(500);
+
+		client.hset(userId,'userId',userId);
+		client.hset(userId,'videoBrokerId','',function(err, val){
+			if(err) res.send(500);
+			res.send(200);
+		});
+	});
+});
+
+/* DELETE document brokerId */
+router.delete('/:id/documentBrokerId', function(req,res){
+	var client = module.parent.exports.set('redis');
+
+	var userId = req.param('id');
+
+	client.exists(userId, function(err, bool){
+		if(err) res.send(500);
+
+		client.hset(userId,'userId',userId);
+		client.hset(userId,'documentBrokerId','',function(err, val){
+			if(err) res.send(500);
+			res.send(200);
+		});
+	});
+});
+
+/* DELETE presentation brokerId */
+router.delete('/:id/presentationBrokerId', function(req,res){
+	var client = module.parent.exports.set('redis');
+
+	var userId = req.param('id');
+
+	client.exists(userId, function(err, bool){
+		if(err) res.send(500);
+
+		client.hset(userId,'userId',userId);
+		client.hset(userId,'presentationBrokerId','',function(err, val){
+			if(err) res.send(500);
+			res.send(200);
+		});
 	});
 });
 
