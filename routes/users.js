@@ -42,6 +42,7 @@ router.put('/:id', function(req,res){
 	var videoBrokerId = req.param('videoBrokerId');
 	var documentBrokerId = req.param('documentBrokerId');
 	var presentationBrokerId = req.param('presentationBrokerId');
+
 	if(!videoBrokerId && !documentBrokerId && !presentationBrokerId) res.send(400);
 
 	client.exists(userId, function(err, bool){
@@ -51,19 +52,19 @@ router.put('/:id', function(req,res){
 		if(videoBrokerId){
 			console.log("update videoBrokerId");
 			client.hset(userId,'videoBrokerId',videoBrokerId,function(err, val){
-				if(err) res.send(500)
+				if(err) res.send(500);
 				res.send(200);
 			});
 		}else if(documentBrokerId){
 			console.log("update documentBrokerId");
 			client.hset(userId,'documentBrokerId',documentBrokerId,function(err, val){
-				if(err) res.send(500)
+				if(err) res.send(500);
 				res.send(200);
 			});
 		}else if(presentationBrokerId){
 			console.log("update presentationBrokerId");
 			client.hset(userId,'presentationBrokerId',presentationBrokerId,function(err, val){
-				if(err) res.send(500)
+				if(err) res.send(500);
 				res.send(200);
 			});
 		}
@@ -81,7 +82,7 @@ router.put('/:id/videoBrokerId', function(req,res){
 
 		client.hset(userId,'userId',userId);
 		client.hset(userId,'videoBrokerId',brokerId,function(err, val){
-			if(err) res.send(500)
+			if(err) res.send(500);
 			res.send(200);
 		});
 	});
@@ -98,7 +99,7 @@ router.put('/:id/documentBrokerId', function(req,res){
 
 		client.hset(userId,'userId',userId);
 		client.hset(userId,'documentBrokerId',brokerId,function(err, val){
-			if(err) res.send(500)
+			if(err) res.send(500);
 			res.send(200);
 		});
 	});
@@ -115,7 +116,7 @@ router.put('/:id/presentationBrokerId', function(req,res){
 
 		client.hset(userId,'userId',userId);
 		client.hset(userId,'presentationBrokerId',brokerId,function(err, val){
-			if(err) res.send(500)
+			if(err) res.send(500);
 			res.send(200);
 		});
 	});

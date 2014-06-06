@@ -31,6 +31,7 @@ redis.on('ready', function(err){
         // redis.hset('hoge','videoBrokerId','1');
         // redis.hset('hoge','documentBrokerId','2');
         // redis.hset('hoge','presentationBrokerId','3');
+        // FLG=true;
         OAuth2.Client.getToken({},function(err, result){
             if (err) console.log('Access Token Error', err.message);
 
@@ -71,7 +72,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  next();
+}).options('*', function(req, res, next){
+    res.end();
+});
 app.use('/users', users);
 
 /// catch 404 and forwarding to error handler
