@@ -1,7 +1,7 @@
 /* Config OAuth2 Setting */
-var INFOSCOOP_HOST='<Host>';
-var CLIENT_ID='<ClientID>';
-var CLIENT_SECRET='<ClientSecret>';
+var INFOSCOOP_HOST='http://localhost:8080/infoscoop';
+var CLIENT_ID='1352637714679e3da0b8ebaec02e0d0f38566870133e565941b';
+var CLIENT_SECRET='1352637714679e3da178ebaec02e0d0f38566870133e565941b';
 var FLG=false;
 
 var express = require('express');
@@ -17,7 +17,7 @@ var redis = require('redis').createClient();
 var OAuth2 = require('simple-oauth2')({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    site: 'http://'+INFOSCOOP_HOST+'/infoscoop'
+    site: INFOSCOOP_HOST
 });
 
 /* init for redis */
@@ -35,14 +35,11 @@ redis.on('ready', function(err){
         OAuth2.Client.getToken({},function(err, result){
             if (err) console.log('Access Token Error', err.message);
 
-            var opt = {
-                host: INFOSCOOP_HOST,
-                path: '/infoscoop/isapi/v1/admin/profiles/user.json?access_token='+result.access_token,
-            }
-
-            var req = http.get(opt, function(res){
+            console.log(result.access_token);
+            var req = http.get(INFOSCOOP_HOST+'/isapi/v1/admin/profiles/user.json?access_token='+result.access_token, function(res){
                         res.setEncoding('utf8');
                         res.on('data', function (chunk) {
+                            console.log(chunk);
                             var json = JSON.parse(chunk);
                             for(var i in json.userProfiles) {
                                 var userId = json.userProfiles[i].uid;
